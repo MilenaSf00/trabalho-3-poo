@@ -50,18 +50,30 @@ public class ProdutoCategoriaUnidade extends Produto{
         }
     }
     
-   
+   /**
+
+Método que calcula o preço de um item.
+@return o preço do item (preço * quantidade).
+*/
     public double calcularPreco() {
      return preco * quantidade;
      
  }
     
+/**
 
+Método que retorna uma string que representa o objeto Item.
+@return uma string no formato "super.toString() + "quantidade"+ getQuantidade()".
+*/
     public String toString (){
         return super.toString() + "quantidade"+ getQuantidade();
     }
 
+/**
 
+Método que retorna a quantidade de um item.
+@return a quantidade do item.
+*/
     public double getQuantidade() {
         return this.quantidade;
     }

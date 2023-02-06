@@ -25,14 +25,23 @@ public class ProdutoCategoriaPeso extends Produto{
   
     
     }
+/**
 
+Recupera a quantidade de um item.
+@return quantidade do item.
+*/
     public double getQuantidade() {
         return quantidade;
     }
 
     
 
-  
+  /**
+
+Define a quantidade de um item.
+@param quantidade quantidade a ser definida para o item.
+@throws Exception caso a quantidade seja menor ou igual a zero.
+*/
     //@Override
     public void setQuantidade(double quantidade)throws Exception {
         if(quantidade > 0){
@@ -48,13 +57,22 @@ public class ProdutoCategoriaPeso extends Produto{
         }
     }
     
-    
+    /**
+
+Método para retornar a representação em string do objeto Item
+@return Uma string contendo as informações do objeto Item
+*/
     //@Override
     public String toString (){
         return super.toString() + "quantidade"+ getQuantidade();
     }
 
+/**
 
+Método para calcular o preço de um item
+@return O preço total de um item
+@throws UnsupportedOperationException Caso a operação ainda não esteja implementada
+*/
     //@Override
     public double calcularPreco() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

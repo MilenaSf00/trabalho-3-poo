@@ -112,13 +112,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+/**
 
+Adiciona um produto na lista de produtos.
+@param evt o evento que aciona o método.
+*/
     private void addProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProdutoActionPerformed
         // TODO add your handling code here:
         InterfaceProduto interfaceProduto = new InterfaceProduto(listaProduto);
         interfaceProduto.setVisible(true);
     }//GEN-LAST:event_addProdutoActionPerformed
+/**
 
+Adiciona uma nota fiscal na lista de notas fiscais.
+@param evt o evento que aciona o método.
+*/
     private void addNotaFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNotaFiscalActionPerformed
         // TODO add your handling code here:
         InterfaceNotaFiscal interfaceNotaFiscal =  new InterfaceNotaFiscal(gerenciarNotasFiscais, listaProduto);

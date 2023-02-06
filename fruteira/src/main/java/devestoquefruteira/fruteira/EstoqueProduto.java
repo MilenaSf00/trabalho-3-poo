@@ -5,18 +5,27 @@ import java.util.List;
 //import devestoquefruteira.DevEstoqueFruteira.Execoes.CodigoInvalidoException;
 public class EstoqueProduto implements IProduto{
 
+    /**
+    * Atributo que representa a lista de produtos no estoque.
+    */
     List<Produto> listaProdutos; // lista de produtos
 
 
-    /**
-     * Construtor da Classe EstoqueProduto .
-     * @param List Produto p.
-     */
+    
 
  
+    /**
+    * Construtor que inicializa a lista de produtos como vazia.
+    */
     public EstoqueProduto (){
       this.listaProdutos = new ArrayList<Produto>();
     }
+    
+    /**
+    * Construtor que inicializa a lista de produtos com a lista de produtos passada como parâmetro.
+    * 
+    * @param p Lista de produtos a ser utilizada para inicializar o estoque.
+    */
     public EstoqueProduto (List<Produto> p){
         this.listaProdutos = p;
         

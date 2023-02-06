@@ -30,6 +30,14 @@ public class InterfaceProduto extends javax.swing.JFrame {
         modo="Navegar";
         ManipularInterface();
     }
+    
+    /**
+
+    LoadTableProduto - Carrega a tabela de Produto
+    Cria um modelo de tabela {@link DefaultTableModel} com colunas "Código", "Nome", "Descrição", "Quantidade" e "Preço"
+    Para cada item na lista de produtos {@link listaProduto}, é criado uma linha com os dados do produto e adicionada ao modelo de tabela
+    Por fim, o modelo de tabela é definido na tabela {@link tblProduto}
+*/
     public void LoadTableProduto(){
         DefaultTableModel modeloProduto = new DefaultTableModel(new Object [] {"Código","Nome", "Descrição","Quantidade", "Preço"},0);
 
@@ -40,7 +48,9 @@ public class InterfaceProduto extends javax.swing.JFrame {
             }
             tblProduto.setModel(modeloProduto);
     }
-    
+        /**
+        LoadTableEstoque - Carrega a tabela de Estoque
+        **/
      public void LoadTableEstoque(){
         DefaultTableModel modeloProduto = new DefaultTableModel(new Object [] {"Código","Nome", "Descrição","Quantidade", "Preço"},0);
 
@@ -52,7 +62,9 @@ public class InterfaceProduto extends javax.swing.JFrame {
             tblProdutoEstoque.setModel(modeloProduto);
     }
     
-    
+    /**
+     * Classe de manipulaçao do produto.
+     */
     public void ManipularInterface(){
         switch(modo){
             case "Navegar":
@@ -525,6 +537,13 @@ public class InterfaceProduto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+
+    Este método é responsável por salvar as informações de um produto, caso ele seja novo, adiciona-o na lista de produtos,
+    caso seja uma edição, modifica o produto já existente na lista. Todos os dados são obtidos através de entrada de dados
+    de campos de texto. Em caso de erro, é exibida uma mensagem de erro para o usuário.
+    @param evt - Evento do botão Salvar Produto.
+*/
     private void btnSalvarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoActionPerformed
         // TODO add your handling code here:
           // TODO add your handling code here:
@@ -601,109 +620,16 @@ public class InterfaceProduto extends javax.swing.JFrame {
         LoadTableProduto();
         LoadTableEstoque();
         
-        
-        /*if(modo.equals("Novo")){
-                try {
-                   
-                    String nome =txtNome.getText();
-                    String descricao = txtDescricao.getText();
-                    //int quantidade = Integer.parseInt(txtQuantidade.getText());
-                   double preco = Double.parseDouble(txtPreco.getText());
-                    
-                 
-                    try{
-   
-                     /*   Produto p = null ;
-                       
-                        if (btnRadioKg .isSelected() ){
-                          double quantidade ;
-                          quantidade = Double.parseDouble(txtQuantidade.getText());
-                          preco = Double.parseDouble(txtPreco.getText());
-                          
-                         // preco = preco * quantidade;
-                          
-                          
-                          
-                          p   = new ProdutoCategoriaPeso(quantidade, txtNome.getText(),txtDescricao.getText(), preco);
-    
-                        }else if(btnRadioUn.isSelected()){
-                            
-                            int quantidade = Integer.parseInt(txtQuantidade.getText());
-                           // preco = Double.parseDouble(txtPreco.getText()); 
-                            p = new ProdutoCategoriaUnidade(quantidade ,txtNome.getText(), txtDescricao.getText(), preco);
-                        
-                        
-                        
-                        }
-                        
-                        
-                        listaProduto.addProduto(p);
-                        
-                        
-                        
-                        
-                        JOptionPane.showMessageDialog(null, "Produto adicionado!");
-                        modo="Navegar";
-                        ManipularInterface();
-                        txtNome.setText("");
-                        txtDescricao.setText("");
-                        txtQuantidade.setText("");
-                        txtPreco.setText("");
-                    }catch (Exception e){
-                        JOptionPane.showMessageDialog(null,e.getMessage());
-                    
-                    }
-                       
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro, preencha todos os campos.");
-                }
-                
-        }else if(modo.equals("Editar")){
-            try {
-                int index = tblProduto.getSelectedRow();
-                
-                Produto p = listaProduto.getProduto(index);
-                
-                try {
-                    p.setNome(txtNome.getText());  
-                    try{
-                        p.setDescricao(txtDescricao.getText()); 
-                        try {
-                            p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-                            
-                            try {
-                                p.setPreco(Double.parseDouble(txtPreco.getText())); 
-                               
-                                JOptionPane.showMessageDialog(null, "Produto modificado!");
-                                modo="Navegar";
-                                ManipularInterface();
-                                txtNome.setText("");
-                                txtDescricao.setText("");
-                                txtQuantidade.setText("");
-                                txtPreco.setText("");
-                            } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(null,ex.getMessage());            
-                            }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null,ex.getMessage());            
-                        }
-                    }catch(Exception e){
-                        JOptionPane.showMessageDialog(null,e.getMessage()); 
-                    }
-                } catch(Exception e){
-                    JOptionPane.showMessageDialog(null,e.getMessage()); 
-                }
-            } catch (Exception ex) {
-               JOptionPane.showMessageDialog(null,"Ocorreu um erro, preencha todos os campos.");          
-            }
-        }
-        LoadTableProduto();
-        LoadTableEstoque();*/
-        
-                                                    
+                                 
         
     }//GEN-LAST:event_btnSalvarProdutoActionPerformed
 
+    /**
+
+    Método que cancela a ação de inserção ou edição de um produto.
+    Limpa os campos de texto e volta para o modo "Navegar".
+    @param evt Evento de clique no botão "Cancelar".
+*/
     private void btnCancelarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarProdutoActionPerformed
         // TODO add your handling code here:
         txtNome.setText("");
@@ -718,6 +644,16 @@ public class InterfaceProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescricaoActionPerformed
 
+    /**
+
+    Método que exclui um produto selecionado na tabela.
+
+    Remove o produto da lista e atualiza a tabela.
+
+    Exibe uma mensagem de sucesso ou erro na operação.
+
+    @param evt Evento de clique no botão "Excluir".
+*/
     private void btnExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdutoActionPerformed
         // TODO add your handling code here:
         int index = tblProduto.getSelectedRow();
@@ -734,13 +670,23 @@ public class InterfaceProduto extends javax.swing.JFrame {
         modo="Navegar";
         ManipularInterface();
     }//GEN-LAST:event_btnExcluirProdutoActionPerformed
+/**
 
+    Método que habilita o modo de edição para um produto selecionado na tabela.
+    @param evt Evento de clique no botão "Editar".
+*/
     private void btnEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProdutoActionPerformed
         // TODO add your handling code here:
         modo="Editar";
         ManipularInterface();
     }//GEN-LAST:event_btnEditarProdutoActionPerformed
 
+    /**
+
+    Método que habilita o modo de inserção de um novo produto.
+    Limpa os campos de texto.
+    @param evt Evento de clique no botão "Novo".
+*/
     private void btnNovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoProdutoActionPerformed
         // TODO add your handling code here:
         txtNome.setText("");
@@ -751,6 +697,11 @@ public class InterfaceProduto extends javax.swing.JFrame {
         ManipularInterface();
     }//GEN-LAST:event_btnNovoProdutoActionPerformed
 
+    /**
+
+    Método que exibe os dados do produto selecionado na tabela em campos de texto.
+    @param evt Evento de clique na tabela de produtos.
+*/
     private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
         // TODO add your handling code here:
         int index = tblProduto.getSelectedRow();
@@ -772,6 +723,18 @@ public class InterfaceProduto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblProdutoMouseClicked
 
+    /**
+
+    O método btnPesquisarActionPerformed é responsável por pesquisar um produto no estoque.
+    Ele é executado quando o botão "Pesquisar" é clicado.
+    @param evt um evento de ação que indica que o botão foi clicado.
+    O método obtém o código do produto digitado no campo de texto "txtCodigo".
+    É criado um modelo de tabela "DefaultTableModel" com as colunas "Código", "Nome", "Descrição", "Quantidade" e "Preço".
+    O método então verifica se há um produto na lista de produtos "listaProduto" com o código obtido.
+    Se o produto for encontrado, uma linha é adicionada ao modelo de tabela com as informações do produto.
+    Se não for encontrado, é exibida uma mensagem "Produto não encontrado" e a tabela é recarregada com todos os produtos no estoque.
+    Por fim, o modelo de tabela é aplicado à tabela "tblProdutoEstoque".
+*/
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
         int codigo = Integer.parseInt(txtCodigo.getText());

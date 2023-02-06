@@ -84,10 +84,8 @@ public class Produto {
     
     
     
-    //return quantidade;
         
     
-       // return   quantidade;}
     /**
      * Captura o preço do produto.
      * @return preco capturado.
@@ -136,9 +134,6 @@ public class Produto {
 
     
     
-   /* public double calcularPreco(){
-    
-    }*/
   
 
     

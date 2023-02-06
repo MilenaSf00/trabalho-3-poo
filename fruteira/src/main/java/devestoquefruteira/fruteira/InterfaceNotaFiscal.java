@@ -21,6 +21,13 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+
+/**
+
+Classe InterfaceNotaFiscal que extende JFrame e permite gerenciar as notas fiscais
+
+@author
+*/
 public class InterfaceNotaFiscal extends javax.swing.JFrame {
     private GerenciarNotasFiscais listaDeNotasFiscais;
     private EstoqueProduto estoque;
@@ -28,10 +35,16 @@ public class InterfaceNotaFiscal extends javax.swing.JFrame {
     List<Item>listaDeItem;
     private String modo;
     DefaultTableModel modelo = new DefaultTableModel();
-  DefaultListModel<String> listaNFModel = new DefaultListModel<>();
+    DefaultListModel<String> listaNFModel = new DefaultListModel<>();
     private JList<String> mostrarLista2 = new JList<>(listaNFModel);
-     DefaultListModel modeloLista = new DefaultListModel();
+    DefaultListModel modeloLista = new DefaultListModel();
     
+    /**
+
+    Construtor que inicializa componentes da interface e armazena as listas de notas fiscais e de estoque de produtos.
+    @param listaDeNotasFiscais - lista de notas fiscais
+    @param estoque - estoque de produtos
+    */
     public InterfaceNotaFiscal(GerenciarNotasFiscais listaDeNotasFiscais, EstoqueProduto estoque) {
         initComponents();
         this.listaDeNotasFiscais = listaDeNotasFiscais;
@@ -45,7 +58,10 @@ public class InterfaceNotaFiscal extends javax.swing.JFrame {
         ManipularInterface(); 
     }
 
-    
+    /**
+
+    Método LoadTableNotafiscal que carrega a tabela de notas fiscais
+    */
     public void LoadTableNotafiscal(){
     DefaultTableModel novoModelo = new DefaultTableModel(new Object [] {"Códido do produto","Nome do produto","Descriçãodo produto","Quantidade item","Preço do item"},0);
         for(int i=0;i<listaDeItem.size();i++){
@@ -63,30 +79,33 @@ public class InterfaceNotaFiscal extends javax.swing.JFrame {
     }
     
     
-    
+    /**
+
+    Método loadTableNotaFiscalRegistrada que carrega a tabela de notas fiscais registradas
+    */
     private void loadTableNotaFiscalRegistrada() {
-    DefaultTableModel modelTabelaRegistrada = new DefaultTableModel(new Object [] {"Codigo da nota fiscal","data da nota fiscal","Códido do produto","Nome do produto","Descriçãodo produto","Quantidade item","Preço do item"},0);
+        DefaultTableModel modelTabelaRegistrada = new DefaultTableModel(new Object [] {"Codigo da nota fiscal","data da nota fiscal","Códido do produto","Nome do produto","Descriçãodo produto","Quantidade item","Preço do item"},0);
    
-for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
-    for(Item item : notaFiscal.getListaItem()) {
-    Object[] linha = { 
-        notaFiscal.getCodNotaFiscal(), 
-        notaFiscal.getData(),
-        item.getProduto().getCodigo(),
-        item.getProduto().getNome(),
-        item.getProduto().getDescricao(),
-        item.getQuantidade(),
-        item.getPreco()
+        for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
+            for(Item item : notaFiscal.getListaItem()) {
+            Object[] linha = { 
+                notaFiscal.getCodNotaFiscal(), 
+                notaFiscal.getData(),
+                item.getProduto().getCodigo(),
+                item.getProduto().getNome(),
+                item.getProduto().getDescricao(),
+                item.getQuantidade(),
+                item.getPreco()
     
-        
-        
-        };
-        modelTabelaRegistrada.addRow(linha);
+            };
+             modelTabelaRegistrada.addRow(linha);
+        }
+        tabelaNotaFiscalRegistrada.setModel(modelTabelaRegistrada);
     }
-    tabelaNotaFiscalRegistrada.setModel(modelTabelaRegistrada);
 }
-}
-    
+    /**
+     * Classe de manipulaçao da nota fiscal
+     */
     public void ManipularInterface(){
         switch(modo){
             case "Navegar":
@@ -641,6 +660,15 @@ for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /**
+
+    Método TabelaNFMouseClicked é chamado quando o usuário clica em uma linha da tabela TabelaNF.
+
+    Ele verifica se há uma linha selecionada e, se sim, carrega os dados da nota fiscal selecionada na tela.
+
+    @param evt É um objeto do tipo java.awt.event.MouseEvent que representa o evento de clique do mouse.
+    */
     private void TabelaNFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaNFMouseClicked
 
         int index = TabelaNF.getSelectedRow();
@@ -659,23 +687,41 @@ for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
     
     }//GEN-LAST:event_TabelaNFMouseClicked
 
+    
+    /**
+
+    Método BotaoCadastrarNFActionPerformed é chamado quando o usuário clica no botão "Cadastrar".
+    Ele limpa o campo TxtQtdDeItem e define o modo "Novo".
+    @param evt É um objeto do tipo java.awt.event.ActionEvent que representa o evento de clique do botão.
+    */
     private void BotaoCadastrarNFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarNFActionPerformed
         TxtQtdDeItem.setText("");
         modo="Novo";
         ManipularInterface(); 
     }//GEN-LAST:event_BotaoCadastrarNFActionPerformed
 
+    /**
+
+    Método BotaoEditarNFActionPerformed é chamado quando o usuário clica no botão "Editar".
+
+    Ele define o modo "Editar".
+
+    @param evt É um objeto do tipo java.awt.event.ActionEvent que representa o evento de clique do botão.
+*/
     private void BotaoEditarNFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarNFActionPerformed
-       
-        
-        
-        
         modo="Editar";
         ManipularInterface();
         
  
     }//GEN-LAST:event_BotaoEditarNFActionPerformed
 
+    /**
+
+    Método BotaoExcluiRNFActionPerformed é chamado quando o usuário clica no botão "Excluir".
+    Ele verifica se há uma nota fiscal selecionada na tabela e, se sim, verifica se há um item selecionado na lista.
+    Se ambas as verificações forem positivas, o item é excluído da nota fiscal.
+    @param evt É um objeto do tipo java.awt.event.ActionEvent que representa o evento de clique do botão.
+    * */
     private void BotaoExcluiRNFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoExcluiRNFActionPerformed
 
         int index = TabelaNF.getSelectedRow();
@@ -707,6 +753,18 @@ for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
         ManipularInterface();
     }//GEN-LAST:event_botaoCancelarNFActionPerformed
 
+    /**
+
+    Método que manipula a interface de acordo com o modo atual (Novo, Editar, Navegar).
+    Se o modo for "Novo", adiciona um novo item na Nota Fiscal com base nas informações selecionadas
+    no jComboBox e inseridas no campo TxtQtdDeItem.
+    Se a quantidade inserida for menor que zero, exibe uma mensagem de erro informando o usuário.
+    Se o modo for "Editar", atualiza as informações do item selecionado na tabela.
+    Caso ocorra algum erro, exibe uma mensagem de erro informando o usuário.
+    Ao final, atualiza a tabela de Notas Fiscais e habilita os botões de Editar e Excluir.
+    @param evt Evento gerado pelo clique do botão "Salvar Item".
+*/
+    
     private void botaoSalvarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarItemActionPerformed
     if (modo.equals("Novo")) {
         try {
@@ -754,330 +812,16 @@ for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
     BotaoEditarNF.setEnabled(true);
     BotaoExcluiRNF.setEnabled(true);
 
-        
-        
-        
-        
-        
-        
-        /* if (modo.equals("Novo")) {
-          try {
-            Item item = new Item();
-            Produto selectedProduto = (Produto) jComboBoxItem.getSelectedItem();
-            item.setProduto(selectedProduto);
-            int quantidade = Integer.parseInt(TxtQtdDeItem.getText());
-            item.setQuantidade(quantidade);
-            double precoDoItem = item.calcularPrecoDoItem();
-            try {
-                if(quantidade <0 ){
-                 JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0.Adicione uma quantidade válida! ");
-                
-                }
-                else {
- 
-              listaDeItem.add(item);
-              JOptionPane.showMessageDialog(null, "Item adicionado!");
-              modo = "Navegar";
-              ManipularInterface();
-              TxtQtdDeItem.setText("");
-              jComboBoxItem.setSelectedIndex(-1);
-                }
-            } catch (Exception ex) {
-              JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-          } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro, preencha todos os campos.");
-          }
-        } else if (modo.equals("Editar")) {
-         
-            
-            try {
-                int index = TabelaNF.getSelectedRow();
-                Item item = listaDeItem.get(index);  
-                Produto selectProduto = (Produto)jComboBoxItem.getSelectedItem();
-                item.setProduto(selectProduto);
-                int quantidade = Integer.parseInt(TxtQtdDeItem.getText());
-                item.setQuantidade(quantidade);
-               
-                    if(quantidade < 0) {
-                    JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0. Adicione uma quantidade válida.");
-                    } else {
-                    item.setQuantidade(quantidade);
-                    double precoDoItem = item.calcularPrecoDoItem();
-                    JOptionPane.showMessageDialog(null, "Item modificado!");
-                    modo = "Navegar";
-                    jComboBoxItem.setSelectedIndex(0);
-                    TxtQtdDeItem.setText("");
-                    }
-                    } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
-                    }
-                /*double precoDoItem = item.calcularPrecoDoItem();
-                
-              
-                if(quantidade <0 ){
-                 JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0.Adicione uma quantidade válida! ");
-                 
-                }
-                else {
-                JOptionPane.showMessageDialog(null, "Item modificado!");
-                        }
-                
-                
-                
-                
-                
-               modo="Navegar";
-               jComboBoxItem.setSelectedIndex(0);
-               TxtQtdDeItem.setText("");*/
-   
-            /*} catch (Exception ex) {
-                //Logger.getLogger(InterfaceNotaFiscal.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null,"Ocorreu um erro, preencha todos os campos.");   
-            }*/
-       
-        
-        //modo="Navegar";
-        //ManipularInterface();
-/*
-}   
-            LoadTableNotafiscal();
-                BotaoEditarNF.setEnabled(true);
-                 BotaoExcluiRNF.setEnabled(true);*/
-                 
-        
-        /*if (modo.equals("Novo")) {
-        try {
-            Item item = new Item();
-            Produto selectedProduto = (Produto) jComboBoxItem.getSelectedItem();
-            item.setProduto(selectedProduto);
-            String quantidadeString = TxtQtdDeItem.getText();
-            
-            if (selectedProduto == null || quantidadeString == null || quantidadeString.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Preencha ou selecione todos os campos.");
-                return;
-            }   
-            double quantidade = Double.parseDouble(quantidadeString);
-            int quantidadeInt = Double.valueOf(quantidade).intValue();
-                try{
-                    if(quantidade <0){
-                       JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0. Adicione uma quantidade válida.");
-                     /*if( quantidade >0){
-                        
-                         item.setQuantidade(quantidadeInt);
-                        double precoDoProduto = selectedProduto.getPreco();
-                       
-                        
-                        double precoDoItem = quantidade * precoDoProduto;
-                       // item.setPreco(precoDoItem);
-                        
-                        
-   
-                        } else {
-                            item.setQuantidade(quantidadeInt);
-                            double precoDoItem = item.calcularPrecoDoItem();
-                            
-                    
-                    
-                    
-                    
-                    
-                    listaDeItem.add(item);
-                    JOptionPane.showMessageDialog(null, "Item adicionado!");
-                    modo = "Navegar";
-                    ManipularInterface();
-                    TxtQtdDeItem.setText("");
-                    jComboBoxItem.setSelectedIndex(-1);
-                }
-            } catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Informe apenas números na quantidade.");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
-        }
-}
-        
-       else if (modo.equals("Editar")) {
-        try {
-            int index = TabelaNF.getSelectedRow();
-                if (index < 0 || index >= listaDeItem.size()) {
-                  JOptionPane.showMessageDialog(null, "Selecione um item da tabela.");
-                  return;
-                }
-                Item item = listaDeItem.get(index);  
-                Produto selectProduto = (Produto)jComboBoxItem.getSelectedItem();
-                item.setProduto(selectProduto);
-                
-                if (selectProduto == null || TxtQtdDeItem.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Preencha ou selecione todos os campos.");
-                    return;
-                }
-                
-                
-                String quantidadeString = TxtQtdDeItem.getText();
-                
-                try{
-                
-                int quantidade  = Integer.parseInt(quantidadeString);
-                //int quantidade = Integer.parseInt(TxtQtdDeItem.getText());
-                    if (quantidade < 0) {
-                        JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0. Adicione uma quantidade válida.");
-                    } else {
-                        item.setQuantidade(quantidade);
-                        double precoDoItem = item.calcularPrecoDoItem();
-                        JOptionPane.showMessageDialog(null, "Item modificado!");
-                        modo = "Navegar";
-                        jComboBoxItem.setSelectedIndex(0);
-                        TxtQtdDeItem.setText("");
-                    }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Informe apenas números na quantidade.");
-        }  
-                
-         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }         
-    }
-            LoadTableNotafiscal();
-            BotaoEditarNF.setEnabled(true);
-            BotaoExcluiRNF.setEnabled(true);
-        
-      
-        
-        */
-        
-        
-        
-        
-        
-        
-        
-      /*if (modo.equals("Novo")) {
-       try {
- 
-            Produto selectedProduto = (Produto) jComboBoxItem.getSelectedItem();
-            item.setProduto(selectedProduto);
-            String quantidadeString = TxtQtdDeItem.getText();
-            if (selectedProduto == null || quantidadeString == null || quantidadeString.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Preencha ou selecione todos os campos.");
-                return;
-            }*/
-
-            
-            
-           /* Item item = new Item();
-            Produto selectedProduto = (Produto) jComboBoxItem.getSelectedItem();
-            item.setProduto(selectedProduto);
-            
-            
-            String quantidadeString = TxtQtdDeItem.getText();
-            if (selectedProduto == null || quantidadeString == null || quantidadeString.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Preencha ou selecione todos os campos.");
-                 return;
-            }   
-            */
-       
-            
-           /* try{
-                int quantidade = Integer.parseInt(quantidadeString);
-                if (quantidade < 0) {
-                    JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0. Adicione uma quantidade válida.");
-                } else {
-                    Item item = new Item(selectedProduto, quantidade,"");
-                //double precoDoItem;
-                //item.setProduto(selectedProduto);
-                item.setQuantidade(quantidade);
-           // double precoDoItem = item.calcularPrecoDoItem();
-                
-                
-                /*if (selectedProduto instanceof ProdutoCategoriaPeso) {
-                    precoDoItem = item.calcular();
-                } else {
-                    precoDoItem = item.calcular();
-                }*/
-                    
-                   /* Item item = new Item();
-                     item.setProduto(selectedProduto);
-                     item.setQuantidade(quantidade);
-                   
-                    double precoDoItem ;*/
-                    
-                 
-                  
-                          
-                    
-                    
-
-                    
-                    /*listaDeItem.add(item);
-                    JOptionPane.showMessageDialog(null, "Item adicionado!");
-                    modo = "Navegar";
-                    ManipularInterface();
-                    TxtQtdDeItem.setText("");
-                    jComboBoxItem.setSelectedIndex(-1);
-                }
-            } catch(NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Informe apenas números na quantidade.");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
-        }
-}
-        
-       else if (modo.equals("Editar")) {
-        try {
-            int index = TabelaNF.getSelectedRow();
-                if (index < 0 || index >= listaDeItem.size()) {
-                  JOptionPane.showMessageDialog(null, "Selecione um item da tabela.");
-                  return;
-                }
-                Item item = listaDeItem.get(index);  
-                Produto selectProduto = (Produto)jComboBoxItem.getSelectedItem();
-                item.setProduto(selectProduto);
-                
-                if (selectProduto == null || TxtQtdDeItem.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Preencha ou selecione todos os campos.");
-                    return;
-                }
-                
-                
-                String quantidadeString = TxtQtdDeItem.getText();
-                
-                try{
-                
-                int quantidade  = Integer.parseInt(quantidadeString);
-                //int quantidade = Integer.parseInt(TxtQtdDeItem.getText());
-                    if (quantidade < 0) {
-                        JOptionPane.showMessageDialog(null, "Quantidade não pode ser menor que 0. Adicione uma quantidade válida.");
-                    } else {
-                        item.setQuantidade(quantidade);
-                        //double precoDoItem = item.calcularPrecoDoItem();
-                        JOptionPane.showMessageDialog(null, "Item modificado!");
-                        modo = "Navegar";
-                        jComboBoxItem.setSelectedIndex(0);
-                        TxtQtdDeItem.setText("");
-                    }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Informe apenas números na quantidade.");
-        }  
-                
-         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }         
-    }
-            LoadTableNotafiscal();
-            BotaoEditarNF.setEnabled(true);
-            BotaoExcluiRNF.setEnabled(true);
-*/
-        
-      
-       
     }//GEN-LAST:event_botaoSalvarItemActionPerformed
 
     private void jComboBoxItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxItemActionPerformed
 
     }//GEN-LAST:event_jComboBoxItemActionPerformed
 
+    /**
+
+    Método responsável por salvar uma nota fiscal.
+*/
     private void SalvarNotaFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarNotaFiscalActionPerformed
     
         Produto produto = new Produto();
@@ -1114,66 +858,30 @@ for (NotaFiscal notaFiscal : listaDeNotasFiscais.getListaNota()) {
            
             Logger.getLogger(InterfaceNotaFiscal.class.getName()).log(Level.SEVERE,null, e);
         } 
-        /*DefaultTableModel modelo = (DefaultTableModel) TabelaNF.getModel();
-     
-    try {
        
-                
-            NotaFiscal notaFiscal = new NotaFiscal();
-           
-                if (listaDeItem == null || listaDeItem.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Nenhum item adicionado na nota fiscal!");
-                    return;
-                }
-            notaFiscal.setListaDeItens(listaDeItem);
-                for(Item item: notaFiscal.getListaItem()){
-                Produto produto = item.getProduto();
-                    
-                   
-                    double quantidadeAtual = produto.getQuantidade();
-                    int quantidadeVendida = item.getQuantidade();
-                    int novaQuantidade = (int) (quantidadeAtual - quantidadeVendida);
-                    produto.setQuantidade(novaQuantidade);
-                    
-                   
-                }  
-            System.out.println("Tamanho da lista de notas fiscais antes de adicionar nova nota: " + listaDeNotasFiscais.size()); //tirar
-            listaDeNotasFiscais.addNotaFiscal(notaFiscal);
-            System.out.println("Tamanho da lista de notas fiscais depois de adicionar nova nota: " + listaDeNotasFiscais.size());
-           // System.out.println("estoque"+ produto.getQuantidade());
-            LoadTableNotafiscal();
-           // interfaceProduto.LoadTableEstoque();
-            
-            modelo.setRowCount(0);
-            listaDeItem.clear();
-            
-            
-            JOptionPane.showMessageDialog(null, "Nota fiscal salva com sucesso! E estoque modificado");
-        }catch (Exception e) {
-           
-            Logger.getLogger(InterfaceNotaFiscal.class.getName()).log(Level.SEVERE,null, e);
-        } */
     }//GEN-LAST:event_SalvarNotaFiscalActionPerformed
 
+    /**
+
+    Este método é executado ao clicar no botão "Mostrar Notas".
+    Ele exibe a lista de notas fiscais cadastradas e seus detalhes, tais como: código da nota fiscal, data da nota fiscal,
+    código do produto, nome do produto, descrição do produto, quantidade, e preço do item.
+    Se a lista de notas fiscais estiver vazia, um diálogo será exibido informando a falta de notas fiscais cadastradas.
+    @param evt - referência ao evento de clique no botão.
+*/
     private void BotaoMostrarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoMostrarNotasActionPerformed
    
                                                         
     GerenciarNotasFiscais gerenciarNotasFiscais = new GerenciarNotasFiscais();
-  DefaultListModel<String> listModel = new DefaultListModel<>();
+    DefaultListModel<String> listModel = new DefaultListModel<>();
   
-  if (listaDeNotasFiscais.getListaNota().isEmpty()) {
-JOptionPane.showMessageDialog(null, "Não há notas fiscais cadastradas");
-return;
-}
-
-  //for (NotaFiscal nota : gerenciarNotasFiscais.getListaNota()) {
-    //String notaFiscal = "Código da nota fiscal: " + nota.getCodNotaFiscal() + "\n";
+        if (listaDeNotasFiscais.getListaNota().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não há notas fiscais cadastradas");
+            return;
+        }
     
-  //}
-
-
-    listaNFModel.removeAllElements();
-    for (NotaFiscal nota : listaDeNotasFiscais.getListaNota()) {
+        listaNFModel.removeAllElements();
+        for (NotaFiscal nota : listaDeNotasFiscais.getListaNota()) {
         
        
         String notaFiscal = "Código da nota fiscal: " + "\n"+ nota.getCodNotaFiscal() + "\n";       
@@ -1184,7 +892,7 @@ return;
         nota.setData(dataAtual);
         
         
-        //listaDeNotasFiscais.getListaNota().add(nota);
+       
         notaFiscal += "Data da nota fiscal: " + dataFormatada + "\n";
        
        
@@ -1209,11 +917,13 @@ return;
         
     }//GEN-LAST:event_BotaoMostrarNotasActionPerformed
 
-    private void btnPesquisarNotaFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNotaFiscalActionPerformed
     
-
-   
-
+    /**
+ * Método responsável por realizar a pesquisa de uma nota fiscal.
+ * 
+ * @param evt Evento do botão "Pesquisar"
+ */
+    private void btnPesquisarNotaFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNotaFiscalActionPerformed
 
         try {
             String texto = caixaDeTextoConsultarNF1.getText();
@@ -1258,6 +968,16 @@ return;
     
     }//GEN-LAST:event_btnPesquisarNotaFiscalActionPerformed
 
+    /**
+
+    O método botaodeExcluirNotaFsicalActionPerformed é responsável por excluir uma nota fiscal da lista de notas fiscais registradas.
+    Ele é acionado pelo botão de excluir nota fiscal.
+    Primeiro, é verificado se o campo de código da nota fiscal está vazio. Se estiver, é exibido uma mensagem para o usuário informando para inserir o código da nota fiscal.
+    Em seguida, o código da nota fiscal é obtido do campo de texto e usado para procurar na lista de notas fiscais. Se a nota fiscal for encontrada, é exibido uma mensagem de confirmação para o usuário, perguntando se ele deseja realmente excluir a nota fiscal.
+    Se o usuário confirmar, a nota fiscal é removida da lista e uma mensagem de sucesso é exibida para o usuário.
+    Se a nota fiscal não for encontrada, é exibido uma mensagem informando que a nota fiscal não foi encontrada.
+    @param evt O evento de clique do botão de excluir nota fiscal.
+*/
     private void botaodeExcluirNotaFsicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeExcluirNotaFsicalActionPerformed
 
         String codigoText = caixaDeTextoConsultarNF1.getText();
@@ -1286,40 +1006,12 @@ return;
     } else {
         JOptionPane.showMessageDialog(null, "Nota fiscal não encontrada");
     }
-      /*  int codigo = Integer.parseInt(caixaDeTextoConsultarNF.getText());
-    NotaFiscal notaFiscalParaExcluir = null;
-  
-    for (NotaFiscal nf : listaDeNotasFiscais.getListaNota()) {
-        if (nf.getCodNotaFiscal() == codigo) {
-            notaFiscalParaExcluir = nf;
-            break;
-        }
-    }
-  
-    if (notaFiscalParaExcluir != null) {
-        int confirm = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a nota fiscal " + notaFiscalParaExcluir.getCodNotaFiscal() + "?");
-        if (confirm == JOptionPane.YES_OPTION) {
-            
-            listaDeNotasFiscais.getListaNota().remove(notaFiscalParaExcluir);
-            
-            JOptionPane.showMessageDialog(null, "Nota fiscal excluída com sucesso");
-           loadTableNotaFiscalRegistrada();
-        }
-        
-        
-        
-    } else {
-        JOptionPane.showMessageDialog(null, "Nota fiscal não encontrada");
-    }
-  */
-  tabelaNotaFiscalRegistrada.setModel(new DefaultTableModel());
-modo= "Navegar";
-ManipularInterface();
+     
+    tabelaNotaFiscalRegistrada.setModel(new DefaultTableModel());
+    modo= "Navegar";
+    ManipularInterface();
     
-     
-        
-        
-     
+ 
   
     }//GEN-LAST:event_botaodeExcluirNotaFsicalActionPerformed
 
